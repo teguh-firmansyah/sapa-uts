@@ -165,6 +165,12 @@ const routes = [
     component: () => import("@/views/admin/AdminClassManagementView.vue"),
     meta: { requiresAuth: true, roles: ["admin"] },
   },
+  {
+    path: "/admin/settings",
+    name: "admin-settings",
+    component: () => import("@/views/admin/AdminSettingsView.vue"),
+    meta: { requiresAuth: true, roles: ["admin"] },
+  },
 
   // ================= FALLBACK =================
   {
