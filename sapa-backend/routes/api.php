@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\Admin\UserManagementController;
 use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\SchoolClassController;
+use App\Http\Controllers\Api\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/classes/options', [SchoolClassController::class, 'options']);
+Route::get('/settings/general', [SettingController::class, 'general']);
+Route::get('/settings/appearance', [SettingController::class, 'appearance']);
+Route::get('/settings/seo', [SettingController::class, 'seo']);
 /*
 |--------------------------------------------------------------------------
 | AUTHENTICATED ROUTES (semua role, wajib login)
@@ -110,6 +114,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/classes/academic-years', [SchoolClassController::class, 'academicYears']);
 
         Route::get('/staff/export', [UserManagementController::class, 'exportStaff']);
+
+        Route::patch('/settings/general', [SettingController::class, 'updateGeneral']);
+        Route::patch('/settings/appearance', [SettingController::class, 'updateAppearance']);
+        Route::patch('/settings/seo', [SettingController::class, 'updateSeo']);
     });
 
     /*

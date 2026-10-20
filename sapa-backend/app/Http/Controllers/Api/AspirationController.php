@@ -7,6 +7,7 @@ use App\Http\Requests\Report\StoreAspirationRequest;
 use App\Http\Resources\ReportResource;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use App\Services\NotificationService;
 
 class AspirationController extends Controller
 {
@@ -60,13 +61,13 @@ class AspirationController extends Controller
         return response()->json($aspirations);
     }
 
-    public function store(StoreAspirationRequest $request)
+    public function store(StoreAspirationRequest $request, NotificationService $notificationService)
     {
         $validated = $request->validated();
         $user = $request->user();
 
         $report = Report::create([
-            'reporter_id' => $user->id,
+            'reporter_id' => $validated['is_anonymous'] ? null : $user->id,
             'type' => 'aspiration',
             'title' => $validated['title'],
             'description' => $validated['description'],
@@ -85,6 +86,8 @@ class AspirationController extends Controller
             'changed_by' => $user->id,
             'note' => 'Aspirasi diajukan.',
         ]);
+
+        $notificationService->notifyAdminsNewReport($report);
 
         return response()->json([
             'message' => 'Aspirasi berhasil diajukan.',

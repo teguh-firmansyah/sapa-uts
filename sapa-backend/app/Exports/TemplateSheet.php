@@ -39,7 +39,7 @@ class TemplateSheet implements FromArray, WithHeadings, WithStyles, ShouldAutoSi
             2 => [
                 'font' => [
                     'italic' => true,
-                    'color' => ['rgb' => '94A3B8'],
+                    'color' => ['argb' => 'FF94A3B8'],
                 ],
             ],
         ];

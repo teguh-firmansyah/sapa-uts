@@ -17,7 +17,12 @@ class ClassListSheet implements FromCollection, WithHeadings, WithMapping, Shoul
      */
     public function collection(): Collection
     {
-        return SchoolClass::orderBy('grade')->orderBy('major')->orderBy('sequence')->get();
+        return collect(
+            SchoolClass::orderBy('grade')
+                ->orderBy('major')
+                ->orderBy('sequence')
+                ->get()
+        );
     }
 
     public function headings(): array
@@ -25,11 +30,15 @@ class ClassListSheet implements FromCollection, WithHeadings, WithMapping, Shoul
         return ['Nama Kelas (salin persis ke kolom nama_kelas)', 'Tahun Ajaran'];
     }
 
+    /**
+     * @param mixed $class
+     * @return array
+     */
     public function map($class): array
     {
         return [
-            $class->name,
-            $class->academic_year,
+            $class->name ?? '',
+            $class->academic_year ?? '',
         ];
     }
 

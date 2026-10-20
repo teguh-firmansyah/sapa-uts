@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\SchoolClass;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class StudentImportTemplateExport implements WithMultipleSheets

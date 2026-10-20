@@ -11,12 +11,19 @@ class NotificationService
     {
         $admins = User::role('admin')->where('is_active', true)->get();
 
-        foreach ($admins as $admin) {
-            $admin->notifications()->create([
-                'report_id' => $report->id,
-                'title' => 'Laporan Baru Perlu Ditugaskan',
-                'message' => "Laporan {$report->report_code} masuk dan menunggu penugasan petugas.",
-            ]);
-        }
+        $typeLabel = match ($report->type) {
+            'bullying' => 'Laporan Bullying Baru',
+            'facility' => 'Laporan Fasilitas Baru',
+            'aspiration' => 'Aspirasi Baru', 
+            default => 'Laporan Baru',
+        };
+
+    foreach ($admins as $admin) {
+        $admin->notifications()->create([
+            'report_id' => $report->id,
+            'title' => $typeLabel,
+            'message' => "Laporan baru dengan kode {$report->report_code} membutuhkan perhatian.",
+        ]);
+    }
     }
 }
